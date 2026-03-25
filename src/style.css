@@ -1,0 +1,38 @@
+body {
+  font-size: 1.5em;
+  line-height: 1.6em;
+  background-color: beige;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+input {
+  padding: 1em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 150px;
+  border-radius: 5px;
+  background-color: darkorange;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: orange;
+}
+
+button:active {
+  background-color: rgba(255, 166, 0, 0.8);
+}
+
+footer {
+  margin-top: 2em;
+}
