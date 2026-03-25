@@ -1,12 +1,43 @@
 <!doctype html>
 <html lang="sv">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dt208g-laboration1</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dt208g-laboration1</title>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Högskolekurser</h1>
+    </header>
+    <main>
+      <div id="courses">
+        <h2>Mina kurser</h2>
+        <button id="button-add">Lägg till kurs</button>
+        <div id="form-course">
+          <form id="add-course">
+            <label for="code">Kurskod:</label><br>
+            <input type="text" id="code" required>
+            <br>
+            <label for="name">Kursnamn:</label><br>
+            <input type="text" id="name" required>
+            <br>
+            <label for="progression">Progression:</label><br>
+            <input type="text" id="prog" required>
+            <br>
+            <label for="syllabus">URL:</label><br>
+            <input type="text" id="syllabus" required>
+            <br>
+            <button type="submit">Spara kurs</button>
+          </form>
+        </div>
+      </div>
+    </main>
+    <footer>Skapad av Hanna Lindkvist, 2026</footer>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
