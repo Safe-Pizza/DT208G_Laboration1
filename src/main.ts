@@ -46,12 +46,14 @@ function storeCourse(courseInfo: Course): void {
   const storageHistoryJson: any = localStorage.getItem("course-info");
   let storageHistoryArr: Array<{ code: string, name: string, progression: string, syllabus: string }> = [];
 
+  //kontroll om lagrat webstorage finns
   if (storageHistoryJson === null) {
     storageHistoryArr = [];
   } else {
     storageHistoryArr = JSON.parse(storageHistoryJson);
   }
 
+  //skapa nytt kurs-objekt
   const storeCourse: Course = {
     code: courseInfo.code,
     name: courseInfo.name,
@@ -59,10 +61,13 @@ function storeCourse(courseInfo: Course): void {
     syllabus: courseInfo.syllabus,
   };
 
+  //lagra objekt i array
   storageHistoryArr.push(storeCourse);
 
+  //konvertera till JSON
   const json: string = JSON.stringify(storageHistoryArr);
 
+  //lagra i webstorage
   localStorage.setItem("course-info", json);
 }
 
@@ -71,11 +76,13 @@ function loadStorage(): void {
   const storageHistoryJson: any = localStorage.getItem("course-info");
   let storageHistoryArr: Array<{ code: string, name: string, progression: string, syllabus: string }> = [];
 
+  //kontroll om webstorge finns konvertera
   if (storageHistoryJson === null) {
     storageHistoryArr = [];
   } else {
     storageHistoryArr = JSON.parse(storageHistoryJson);
 
+    //loopar och skickar till funktion för utskrift till DOM
     storageHistoryArr.forEach(obj => {
       printCourse(obj);
     })
@@ -113,7 +120,7 @@ form.addEventListener("submit", (event) => {
     liEl.textContent = "Du måste ange kurskod";
 
     ulEl.appendChild(liEl);
-    errors?.appendChild(ulEl);
+    errors.appendChild(ulEl);
   };
 
   if (nameInput.value === "") {
@@ -122,7 +129,7 @@ form.addEventListener("submit", (event) => {
     liEl.textContent = "Du måste ange kursnamn";
 
     ulEl.appendChild(liEl);
-    errors?.appendChild(ulEl);
+    errors.appendChild(ulEl);
   };
 
   if (progInput.value === "") {
@@ -131,7 +138,7 @@ form.addEventListener("submit", (event) => {
     liEl.textContent = "Du måste ange progression";
 
     ulEl.appendChild(liEl);
-    errors?.appendChild(ulEl);
+    errors.appendChild(ulEl);
   };
 
   if (syllabusInput.value === "") {
@@ -140,7 +147,7 @@ form.addEventListener("submit", (event) => {
     liEl.textContent = "Du måste ange kurslänk";
 
     ulEl.appendChild(liEl);
-    errors?.appendChild(ulEl);
+    errors.appendChild(ulEl);
   };
 
   if (codeInput.value != "" && nameInput.value != "" && progInput.value != "" && syllabusInput.value != "") {
@@ -155,6 +162,7 @@ form.addEventListener("submit", (event) => {
     //Töm inputfält
     form.reset();
 
+    //Funktion för webstorage
     storeCourse(newCourse);
 
     //Funktion för utskrift
