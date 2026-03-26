@@ -24,7 +24,7 @@ function printCourse(course: Course): void {
         tdCodeEl.innerHTML = course.code;
         tdNameEl.innerHTML = course.name;
         tdProgEl.innerHTML = course.progression;
-        tdSyllabusEl.innerHTML = `<a href="${course.syllabus}">${course.code}</a>`;
+        tdSyllabusEl.innerHTML = `<a href="${course.syllabus}" target="_blank">${course.code}</a>`;
 
         //lägger till td i tr
         trEl.appendChild(tdCodeEl);
