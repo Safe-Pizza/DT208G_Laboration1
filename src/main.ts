@@ -9,11 +9,11 @@ interface Course {
 }
 
 //Hämta DOM-element för formulär
-const form = document.querySelector<HTMLFormElement>("#form-course");
+const form = document.getElementById("form-course") as HTMLFormElement;
 
 
 //Händelselyssnare för submit av formulär
-form?.addEventListener("submit", (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   //Hämta DOM-element för input
