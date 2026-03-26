@@ -98,74 +98,90 @@ const form = document.getElementById("add-course") as HTMLFormElement;
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  //Hämta DOM-element för input
-  const codeInput = document.getElementById("code") as HTMLInputElement;
-  const nameInput = document.getElementById("name") as HTMLInputElement;
-  const progInput = document.getElementById("prog") as HTMLInputElement;
-  const syllabusInput = document.getElementById("syllabus") as HTMLInputElement;
+  const storageHistoryJson: any = localStorage.getItem("course-info");
+  let storageHistoryArr: Array<{ code: string, name: string, progression: string, syllabus: string }> = [];
 
-  //Hämta DOM-element för fellista
-  const errors = document.getElementById("error-list") as HTMLDivElement;
-
-  //Tömma fellista
-  errors.innerHTML = "";
-
-  //Skapa list-element
-  const ulEl: HTMLUListElement = document.createElement("ul");
-
-  //validera input
-  if (codeInput.value === "") {
-    let liEl: HTMLLIElement = document.createElement("li");
-
-    liEl.textContent = "Du måste ange kurskod";
-
-    ulEl.appendChild(liEl);
-    errors.appendChild(ulEl);
+  //kontroll om webstorge finns konvertera
+  if (storageHistoryJson === null) {
+    storageHistoryArr = [];
+  } else {
+    storageHistoryArr = JSON.parse(storageHistoryJson);
   };
+    //Hämta DOM-element för input
+    const codeInput = document.getElementById("code") as HTMLInputElement;
+    const nameInput = document.getElementById("name") as HTMLInputElement;
+    const progInput = document.getElementById("prog") as HTMLInputElement;
+    const syllabusInput = document.getElementById("syllabus") as HTMLInputElement;
 
-  if (nameInput.value === "") {
-    let liEl: HTMLLIElement = document.createElement("li");
+    //Hämta DOM-element för fellista
+    const errors = document.getElementById("error-list") as HTMLUListElement;
 
-    liEl.textContent = "Du måste ange kursnamn";
+    //Tömma fellista
+    errors.innerHTML = "";
 
-    ulEl.appendChild(liEl);
-    errors.appendChild(ulEl);
-  };
+    let errorArr: string[] = [];
 
-  if (progInput.value === "") {
-    let liEl: HTMLLIElement = document.createElement("li");
+    //Validering
+    if (codeInput.value === "") {
+      errorArr.push("<li>Du måste ange kurskod</li>");
+    } else if (codeInput.value !== "") {
+      errorArr.shift;
+    };
+    if (nameInput.value === "") {
+      errorArr.push("<li>Du måste ange kursnamn</li>");
+    } else if (nameInput.value !== "") {
+      errorArr.shift;
+    };
+    if (progInput.value === "") {
+      errorArr.push("<li>Du måste ange progression</li>");
+    } else if (progInput.value !== "") {
+      errorArr.shift;
+    }
+    if (syllabusInput.value === "") {
+      errorArr.push("<li>Du måste ange kurslänk</li>");
+    } else if (syllabusInput.value !== "") {
+      errorArr.shift;
+    }
 
-    liEl.textContent = "Du måste ange progression";
+    //Validering input progression rätt format: A, B eller C
+    if (progInput.value.toUpperCase() != "A" && progInput.value.toUpperCase() != "B" && progInput.value.toUpperCase() != "C") {
+      errorArr.push("<li>Progression kan endast vara A, B eller C</li>");
+    } else {
+      errorArr.shift;
+    }
 
-    ulEl.appendChild(liEl);
-    errors.appendChild(ulEl);
-  };
+    //Validering om kurskod redan finns inlagd
+    storageHistoryArr.forEach(obj => {
+      if (obj.code.includes(codeInput.value)) {
+        errorArr.push("<li>Kurskoden finns redan inlagd</li>");
+      } else {
+        errorArr.shift;
+      }
+    });
 
-  if (syllabusInput.value === "") {
-    let liEl: HTMLLIElement = document.createElement("li");
-
-    liEl.textContent = "Du måste ange kurslänk";
-
-    ulEl.appendChild(liEl);
-    errors.appendChild(ulEl);
-  };
-
-  if (codeInput.value != "" && nameInput.value != "" && progInput.value != "" && syllabusInput.value != "") {
-    //Skapa nytt kursobjekt
-    const newCourse: Course = {
-      code: codeInput.value,
-      name: nameInput.value,
-      progression: progInput.value,
-      syllabus: syllabusInput.value,
+    //loopar och skriver ut felmeddelanden till errorlist
+    if (errorArr.length > 0) {
+      errorArr.forEach(error => {
+        errors.innerHTML += error;
+      })
     };
 
-    //Töm inputfält
-    form.reset();
+    if (errorArr.length === 0) {
+      //Skapa nytt kursobjekt
+      const newCourse: Course = {
+        code: codeInput.value,
+        name: nameInput.value,
+        progression: progInput.value.toUpperCase(),
+        syllabus: syllabusInput.value,
+      };
 
-    //Funktion för webstorage
-    storeCourse(newCourse);
+      //Töm inputfält
+      form.reset();
 
-    //Funktion för utskrift
-    printCourse(newCourse);
-  };
-})
+      //Funktion för webstorage
+      storeCourse(newCourse);
+
+      //Funktion för utskrift
+      printCourse(newCourse);
+    }
+  });
