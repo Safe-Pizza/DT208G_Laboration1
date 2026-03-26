@@ -15,20 +15,36 @@
     <main>
       <div id="courses">
         <h2>Mina kurser</h2>
+        <div id="my-courses">
+          <table id="table-courses">
+            <thead>
+              <tr>
+                <th id="courseCode">Kurskord</th>
+                <th id="courseName">Kursnamn</th>
+                <th id="courseProg">Progression</th>
+                <th id="courseSyll">Länk</th>
+              </tr>
+            </thead>
+            <tbody id="tableData">
+
+            </tbody>
+          </table>
+        </div>
         <button id="button-add">Lägg till kurs</button>
+        <div id="error-list"></div>
         <div id="form-course">
           <form id="add-course">
             <label for="code">Kurskod:</label><br>
-            <input type="text" id="code" required>
+            <input type="text" id="code">
             <br>
             <label for="name">Kursnamn:</label><br>
-            <input type="text" id="name" required>
+            <input type="text" id="name">
             <br>
             <label for="progression">Progression:</label><br>
-            <input type="text" id="prog" required>
+            <input type="text" id="prog">
             <br>
             <label for="syllabus">URL:</label><br>
-            <input type="text" id="syllabus" required>
+            <input type="text" id="syllabus">
             <br>
             <button type="submit">Spara kurs</button>
           </form>
