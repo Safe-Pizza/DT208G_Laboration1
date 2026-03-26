@@ -8,6 +8,35 @@ interface Course {
   syllabus: string;
 }
 
+//funktion för att skriva ut kurser till DOM
+function printCourse(course: Course): void {
+  const table = document.getElementById("table-data") as HTMLTableSectionElement;
+
+  if(table) {
+        //skapa tr- och td-element
+        const trEl: HTMLTableRowElement = document.createElement("tr");
+        const tdCodeEl: HTMLTableCellElement = document.createElement("td");
+        const tdNameEl: HTMLTableCellElement = document.createElement("td");
+        const tdProgEl: HTMLTableCellElement = document.createElement("td");
+        const tdSyllabusEl: HTMLTableCellElement = document.createElement("td");
+
+        //lägg till text
+        tdCodeEl.innerHTML = course.code;
+        tdNameEl.innerHTML = course.name;
+        tdProgEl.innerHTML = course.progression;
+        tdSyllabusEl.innerHTML = `<a href="${course.syllabus}">${course.code}</a>`;
+
+        //lägger till td i tr
+        trEl.appendChild(tdCodeEl);
+        trEl.appendChild(tdNameEl);
+        trEl.appendChild(tdProgEl);
+        trEl.appendChild(tdSyllabusEl);
+
+        //skriv ut till DOM
+        table.appendChild(trEl);
+  }
+};
+
 //Hämta DOM-element för formulär
 const form = document.getElementById("form-course") as HTMLFormElement;
 
@@ -77,6 +106,6 @@ form.addEventListener("submit", (event) => {
       syllabus: syllabusInput.value,
     };
 
-    console.log(newCourse);
+    printCourse(newCourse);
   };
 })
