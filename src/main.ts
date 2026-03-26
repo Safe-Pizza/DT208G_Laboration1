@@ -69,9 +69,14 @@ form?.addEventListener("submit", (event) => {
   };
 
   if (codeInput.value != "" && nameInput.value != "" && progInput.value != "" && syllabusInput.value != "") {
-    console.log(codeInput.value);
-    console.log(nameInput.value);
-    console.log(progInput.value);
-    console.log(syllabusInput.value);
+    //Skapa nytt kursobjekt
+    const newCourse: Course = {
+      code: codeInput.value,
+      name: nameInput.value,
+      progression: progInput.value,
+      syllabus: syllabusInput.value,
+    };
+
+    console.log(newCourse);
   };
 })
