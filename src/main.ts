@@ -1,5 +1,9 @@
 import './style.css'
 
+document.addEventListener("DOMContentLoaded", () => {
+  loadStorage();
+})
+
 //Interface för kurs
 interface Course {
   code: string;
@@ -40,7 +44,7 @@ function printCourse(course: Course): void {
 function storeCourse(courseInfo: Course): void {
   //Hämta webstorage
   const storageHistoryJson: any = localStorage.getItem("course-info");
-  let storageHistoryArr: Array<{ code: string, name: string, progression: string, syllabus: string}> = [];
+  let storageHistoryArr: Array<{ code: string, name: string, progression: string, syllabus: string }> = [];
 
   if (storageHistoryJson === null) {
     storageHistoryArr = [];
@@ -60,6 +64,23 @@ function storeCourse(courseInfo: Course): void {
   const json: string = JSON.stringify(storageHistoryArr);
 
   localStorage.setItem("course-info", json);
+}
+
+function loadStorage(): void {
+  //Hämta webstorage
+  const storageHistoryJson: any = localStorage.getItem("course-info");
+  let storageHistoryArr: Array<{ code: string, name: string, progression: string, syllabus: string }> = [];
+
+  if (storageHistoryJson === null) {
+    storageHistoryArr = [];
+  } else {
+    storageHistoryArr = JSON.parse(storageHistoryJson);
+
+    storageHistoryArr.forEach(obj => {
+      printCourse(obj);
+    })
+  }
+
 }
 
 //Hämta DOM-element för formulär
