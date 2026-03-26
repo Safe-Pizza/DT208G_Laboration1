@@ -37,6 +37,31 @@ function printCourse(course: Course): void {
   }
 };
 
+function storeCourse(courseInfo: Course): void {
+  //Hämta webstorage
+  const storageHistoryJson: any = localStorage.getItem("course-info");
+  let storageHistoryArr: Array<{ code: string, name: string, progression: string, syllabus: string}> = [];
+
+  if (storageHistoryJson === null) {
+    storageHistoryArr = [];
+  } else {
+    storageHistoryArr = JSON.parse(storageHistoryJson);
+  }
+
+  const storeCourse: Course = {
+    code: courseInfo.code,
+    name: courseInfo.name,
+    progression: courseInfo.progression,
+    syllabus: courseInfo.syllabus,
+  };
+
+  storageHistoryArr.push(storeCourse);
+
+  const json: string = JSON.stringify(storageHistoryArr);
+
+  localStorage.setItem("course-info", json);
+}
+
 //Hämta DOM-element för formulär
 const form = document.getElementById("add-course") as HTMLFormElement;
 
@@ -108,6 +133,8 @@ form.addEventListener("submit", (event) => {
 
     //Töm inputfält
     form.reset();
+
+    storeCourse(newCourse);
 
     //Funktion för utskrift
     printCourse(newCourse);
