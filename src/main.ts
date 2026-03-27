@@ -78,17 +78,36 @@ function storeCourse(courseInfo: Course): void {
 }
 
 function loadStorage(): void {
-
+//Hämta från localStorage
   const storageHistoryArr: string[] = Object.keys(localStorage);
 
-  if (storageHistoryArr !== null) {
-    for (let i = 0; i < localStorage.length; i++) {
-      let storageHistory = {} as Course;
+  //Kontroll om array har innehåll
+  if (storageHistoryArr.length !== 0) {
 
-      storageHistory = JSON.parse(localStorage.getItem(localStorage.key(i)));
+    //loop för skriva ut respektive storageKey till DOM
+    storageHistoryArr.forEach(key => {
+      if (key !== null) {
+        let storageHistory = {} as Course;
 
-      printCourse(storageHistory);
-    }
+        //Värde string || null, redan kontrollerat att värde finns
+        let object: any = localStorage.getItem(key);
+
+        //kontroll om string skriv ut till DOM
+        if (typeof object === 'string') {
+          storageHistory = JSON.parse(object);
+          printCourse(storageHistory);
+        }
+      }
+
+    })
+    /* for (let i = 0; i < localStorage.length; i++) {
+       let storageHistory = {} as Course;
+ 
+       storageHistory = JSON.parse(localStorage.getItem(localStorage.key(i)));
+ 
+       printCourse(storageHistory);
+     }
+   }*/
   }
 }
 
