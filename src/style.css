@@ -32,6 +32,10 @@ td {
   padding: 5px;
 }
 
+#form-course {
+  display: none;
+}
+
 input {
   padding: 1em;
   width: 100%;

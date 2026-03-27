@@ -2,6 +2,12 @@ import './style.css'
 
 document.addEventListener("DOMContentLoaded", () => {
   loadStorage();
+
+  const buttonAdd = document.getElementById("button-add") as HTMLButtonElement;
+
+  buttonAdd.addEventListener("click", () => {
+    toggleFormDiv();
+  })
 })
 
 //Interface för kurs
@@ -93,6 +99,19 @@ function removeCourseStorage(code: string): void {
   //Radera tabelldata från DOM
   if (document.querySelector<HTMLTableCellElement>(`.${code}`) !== null) {
     document.querySelector<HTMLTableCellElement>(`.${code}`)?.remove();
+  }
+}
+
+function toggleFormDiv(): void {
+  const divEl = document.getElementById("form-course") as HTMLDivElement;
+  const buttonAddEl = document.getElementById("button-add") as HTMLButtonElement;
+
+  if (divEl.style.display === "block") {
+    divEl.style.display = "none";
+    buttonAddEl.textContent = "Lägg till kurs";
+  } else {
+    divEl.style.display = "block";
+    buttonAddEl.textContent = "Göm formulär";
   }
 }
 
