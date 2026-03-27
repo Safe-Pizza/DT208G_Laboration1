@@ -47,6 +47,11 @@ button {
   cursor: pointer;
 }
 
+.button-delete {
+  width: 40px;
+  font-size: 10px;
+}
+
 button:hover {
   background-color: orange;
 }
