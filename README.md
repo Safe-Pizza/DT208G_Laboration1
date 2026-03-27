@@ -2,7 +2,7 @@
 Detta är en laboration i _Webbutveckingsprogrammet_ på Mittuniveristetet.
 
 ## Länk till webbplats
-[Min webbplats](https://github.com/Safe-Pizza/DT208G_Laboration1)
+[Min webbplats](https://safe-pizza.github.io/DT208G_Laboration1/)
 
 ## Syfte
 Syftet med uppgiften är att förstå vad Typescript är, och hur det skiljer sig från JavaScript.
