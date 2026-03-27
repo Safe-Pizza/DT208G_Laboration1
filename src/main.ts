@@ -56,17 +56,6 @@ function printCourse(course: Course): void {
 };
 
 function storeCourse(courseInfo: Course): void {
-  //Hämta webstorage
-  const storageHistoryJson: any = localStorage.getItem("course-info");
-  let storageHistoryArr: string = "";
-
-  //kontroll om lagrat webstorage finns
-  if (storageHistoryJson === null) {
-    storageHistoryArr = "";
-  } else {
-    storageHistoryArr = JSON.parse(storageHistoryJson);
-  }
-
   //skapa nytt kurs-objekt
   const storeCourse: Course = {
     code: courseInfo.code,
@@ -84,23 +73,27 @@ function storeCourse(courseInfo: Course): void {
 
 function loadStorage(): void {
 
-  for (let i = 0; i < localStorage.length; i++) {
-    if (localStorage.getItem(localStorage.key(i)) === null) {
+  const storageHistoryArr: string[] = Object.keys(localStorage);
 
-    } else {
-      console.log(localStorage.getItem(localStorage.key(i)));
+  if (storageHistoryArr !== null) {
+    for (let i = 0; i < localStorage.length; i++) {
       let storageHistory = {} as Course;
 
       storageHistory = JSON.parse(localStorage.getItem(localStorage.key(i)));
 
       printCourse(storageHistory);
-
     }
   }
 }
 
 function removeCourseStorage(code: string): void {
+  //Radera från localStorage
   localStorage.removeItem(code);
+
+  //Radera tabelldata från DOM
+  if (document.querySelector<HTMLTableCellElement>(`.${code}`) !== null) {
+    document.querySelector<HTMLTableCellElement>(`.${code}`)?.remove();
+  }
 }
 
 //Hämta DOM-element för formulär
@@ -110,15 +103,6 @@ const form = document.getElementById("add-course") as HTMLFormElement;
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const storageHistoryJson: any = localStorage.getItem("course-info");
-  let storageHistoryArr: Array<{ code: string, name: string, progression: string, syllabus: string }> = [];
-
-  //kontroll om webstorge finns konvertera
-  if (storageHistoryJson === null) {
-    storageHistoryArr = [];
-  } else {
-    storageHistoryArr = JSON.parse(storageHistoryJson);
-  };
   //Hämta DOM-element för input
   const codeInput = document.getElementById("code") as HTMLInputElement;
   const nameInput = document.getElementById("name") as HTMLInputElement;
@@ -163,13 +147,13 @@ form.addEventListener("submit", (event) => {
   }
 
   //Validering om kurskod redan finns inlagd
-  storageHistoryArr.forEach(obj => {
-    if (obj.code.includes(codeInput.value)) {
-      errorArr.push("<li>Kurskoden finns redan inlagd</li>");
-    } else {
-      errorArr.shift;
-    }
-  });
+  const storageHistoryArr: string[] = Object.keys(localStorage);
+
+  if (storageHistoryArr.includes(codeInput.value)) {
+    errorArr.push("<li>Kurskoden finns redan inlagd</li>");
+  } else {
+    errorArr.shift;
+  };
 
   //loopar och skriver ut felmeddelanden till errorlist
   if (errorArr.length > 0) {
