@@ -9,5 +9,6 @@ export default defineConfig({
                 main: resolve(__dirname, "index.html"),
             }
         }
-    }
+    },
+    base: "/DT208G_Laboration1/",
 })
